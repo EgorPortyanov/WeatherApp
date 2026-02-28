@@ -1,13 +1,3 @@
-# from PyQt6.QtWidgets import QFrame
-
-# class WeatherInfo(QFrame):
-#     def __init__(self):
-#         QFrame.__init__(self)
-#         self.setFixedSize(390, 303)
-#         self.setStyleSheet("background-color: rgba(0, 0, 0, 0.2)")
-
-
-
 from PyQt6.QtWidgets import QFrame, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt6.QtCore import Qt
 
