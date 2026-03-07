@@ -15,7 +15,6 @@ class ForecastItem(QFrame):
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.main_layout)
         
-        
         self.time_label = QLabel(time)
         self.time_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.time_label.setStyleSheet("""
@@ -25,15 +24,13 @@ class ForecastItem(QFrame):
             background: transparent;
         """)
         
-       
         self.icon_label = QLabel()
         self.icon_label.setFixedSize(24, 24)
         self.icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.icon_label.setStyleSheet("background: transparent;")
         
-       
         pixmap = QPixmap("images/icon_weather.png")
-        self.icon_label.setGeometry(0, 0, 24, 24)
+        pixmap = pixmap.scaled(24, 24)
         self.icon_label.setPixmap(pixmap)
        
         self.temp_label = QLabel(temp)

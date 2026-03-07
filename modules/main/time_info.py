@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QFrame, QVBoxLayout, QHBoxLayout, QLabel
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QPixmap
+import time
 
 class TimeInfo(QFrame):
     def __init__(self):
@@ -31,7 +32,12 @@ class TimeInfo(QFrame):
         self.date_layout = QHBoxLayout()
         self.date_layout.setSpacing(10)
 
-        self.day_label = QLabel("Понеділок")
+        current_time = time.localtime()
+        days = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя"]
+        current_day = days[current_time.tm_wday]
+        current_date = time.strftime("%d.%m.%Y", current_time)
+
+        self.day_label = QLabel(current_day)
         self.day_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.day_label.setStyleSheet("""
             font-size: 24px;
@@ -40,7 +46,7 @@ class TimeInfo(QFrame):
             background: transparent;
         """)
 
-        self.date_label = QLabel("24.03.2025")
+        self.date_label = QLabel(current_date)
         self.date_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.date_label.setStyleSheet("""
             font-size: 24px;
@@ -68,7 +74,8 @@ class TimeInfo(QFrame):
         self.pixmap = self.pixmap.scaled(168, 168)
         self.image_label.setPixmap(self.pixmap)
 
-        self.time_label = QLabel("14:24", self.time_circle)
+        current_time_str = time.strftime("%H:%M", current_time)
+        self.time_label = QLabel(current_time_str, self.time_circle)
         self.time_label.setGeometry(0, 0, 168, 168)
         self.time_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.time_label.setStyleSheet("""
@@ -79,3 +86,13 @@ class TimeInfo(QFrame):
         """)
 
         self.main_layout.addWidget(self.time_circle, alignment=Qt.AlignmentFlag.AlignCenter)
+        
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_time)
+        self.timer.start(1000)
+    
+    def update_time(self):
+        """ОНОВЛЮЄ ЧАС КОЖНУ СЕКУНДУ"""
+        current_time = time.localtime()
+        current_time_str = time.strftime("%H:%M", current_time)
+        self.time_label.setText(current_time_str)
