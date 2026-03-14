@@ -1,4 +1,4 @@
-from modules import application, main_window 
+from modules import application, main_window
 
 def main():
     try:
