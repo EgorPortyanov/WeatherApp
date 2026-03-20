@@ -13,13 +13,11 @@ class MainInfo(QFrame):
         self.setLayout(self.main_layout)
         self.setStyleSheet("background-color: rgba(0, 0, 0, 0)")
 
-
         self.header = Header()
         self.main_layout.addWidget(self.header)
         
         self.main_container = QFrame()
         self.main_container.setStyleSheet("background-color: rgba(0, 0, 0, 0)")
-
         self.main_container.setFixedSize(790, 303)
         self.horizontal_layout = QHBoxLayout()
         self.horizontal_layout.setContentsMargins(0, 0, 0, 0)
@@ -37,4 +35,8 @@ class MainInfo(QFrame):
 
         self.graphics_info = GraphicsInfo()
         self.main_layout.addWidget(self.graphics_info)
-        
+    
+    def update_city(self, city_name):
+        self.weather_info.update_city(city_name)
+        self.forecast_info.update_city(city_name)
+        self.graphics_info.update_city(city_name)

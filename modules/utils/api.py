@@ -11,3 +11,7 @@ def get_weather(city_name: str):
     if response.status_code == 200:
         return response.json()
     return None
+
+def get_forecast(city_name: str):
+    """Отримує прогноз погоди для міста"""
+    return get_data(city_name)

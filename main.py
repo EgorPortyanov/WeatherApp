@@ -1,11 +1,13 @@
-from modules import application, main_window
+from modules.app import application
+from modules.window import Window
 
 def main():
     try:
-        main_window.show()
+        window = Window()
+        window.show()
         application.exec()
     except Exception as error:
         print(f"Error: {error}")
 
 if __name__ == "__main__":
-    main() 
+    main()

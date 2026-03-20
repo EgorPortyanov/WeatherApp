@@ -4,8 +4,10 @@ from .city import City
 from modules.utils.api import get_weather
 
 class SidePanel(QFrame):
-    def __init__(self):
+    def __init__(self, window):
         super().__init__()
+        
+        self.window = window
 
         self.setStyleSheet("""
             background-color: rgba(0, 0, 0, 0.1);
@@ -22,6 +24,7 @@ class SidePanel(QFrame):
         self.vertical_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.cities = []
+        self.current_selected = None
 
         cities = ["Дніпро", "Київ", "Братислава", "Варшава", "Рим"]
 
@@ -59,13 +62,17 @@ class SidePanel(QFrame):
         self.main_layout.addWidget(self.scroll_element)
 
     def select_city(self, selected_city):
-        for city in self.cities:
-            city.setStyleSheet("""
-                background-color: rgba(0, 0, 0, 0.2);
+        if self.current_selected:
+            self.current_selected.setStyleSheet("""
+                background-color: transparent;
                 border-radius: 6px;
             """)
-
+        
         selected_city.setStyleSheet("""
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 6px;
         """)
+        
+        self.current_selected = selected_city
+        
+        self.window.update_main_city(selected_city.city_name)

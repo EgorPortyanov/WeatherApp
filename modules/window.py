@@ -23,7 +23,7 @@ class Window(QMainWindow):
         self.main_layout.setSpacing(0)
         self.content_layout = QHBoxLayout()
         self.content.setLayout(self.content_layout)
-        self.side_panel = SidePanel()
+        self.side_panel = SidePanel(self)
         self.content_layout.addWidget(self.side_panel)
         self.setStyleSheet("""background-color: qlineargradient(
             x1: 0, y1: 1, x2: 1, y2: 0,
@@ -34,9 +34,6 @@ class Window(QMainWindow):
         self.content_layout.setContentsMargins(0, 0, 0, 0)
         self.content_layout.setSpacing(20)
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-        
-        # В класі вікна, щоб сховати стандартну панель - self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-        # Qt - головний клас налаштувань (з QtCore)
-
-
-main_window = Window()
+    
+    def update_main_city(self, city_name):
+        self.main.update_city(city_name)

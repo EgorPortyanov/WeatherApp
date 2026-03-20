@@ -5,10 +5,11 @@ class City(QFrame):
     def __init__(self, name, time, temp, desc, max_temp, min_temp, panel):
         super().__init__()
 
+        self.city_name = name
         self.panel = panel
         self.setFixedSize(300, 90)
         self.setStyleSheet("""
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: transparent;
             border-radius: 6px;
         """)
 
