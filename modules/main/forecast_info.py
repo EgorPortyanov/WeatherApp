@@ -10,7 +10,7 @@ class ForecastInfo(QFrame):
         
         self.current_city = "Дніпро"
 
-        self.setFixedHeight(140)
+        self.setFixedSize(790, 157)
         self.setStyleSheet("""
             background-color: rgba(0, 0, 0, 0.2);
             border-radius: 20px;

@@ -92,7 +92,6 @@ class TimeInfo(QFrame):
         self.timer.start(1000)
     
     def update_time(self):
-        """ОНОВЛЮЄ ЧАС КОЖНУ СЕКУНДУ"""
         current_time = time.localtime()
         current_time_str = time.strftime("%H:%M", current_time)
         self.time_label.setText(current_time_str)
