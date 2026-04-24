@@ -1,47 +1,109 @@
+# from PyQt6.QtWidgets import QMainWindow, QFrame, QHBoxLayout, QVBoxLayout
+# from PyQt6.QtCore import Qt 
+# from .main import MainInfo
+# from .side_panel import SidePanel
+# from .title_bar import TitleBar
+
+# class Window(QMainWindow):
+#     def __init__(self):
+#         QMainWindow.__init__(self)
+        
+#         self.setFixedSize(1200, 850)
+#         self.setWindowTitle("Project")
+        
+#         self.central_widget = QFrame()
+#         self.main_layout = QVBoxLayout() 
+#         self.central_widget.setLayout(self.main_layout)
+#         self.setCentralWidget(self.central_widget)
+        
+#         self.title_bar = TitleBar(self)
+#         self.content = QFrame()
+        
+#         self.main_layout.addWidget(self.title_bar)
+#         self.main_layout.addWidget(self.content)
+#         self.main_layout.setContentsMargins(0, 0, 0, 0)
+#         self.main_layout.setSpacing(0)
+        
+#         self.content_layout = QHBoxLayout()
+#         self.content.setLayout(self.content_layout)
+        
+#         self.side_panel = SidePanel(self)
+        
+#         self.main = MainInfo(side_panel=self.side_panel) 
+        
+#         self.content_layout.addWidget(self.side_panel)
+#         self.content_layout.addWidget(self.main)
+        
+#         self.setStyleSheet("""background-color: qlineargradient(
+#             x1: 0, y1: 1, x2: 1, y2: 0,
+#             stop: 0 #8A2BE2, stop: 1 #191970
+#         )""")
+        
+#         self.content_layout.setContentsMargins(0, 0, 0, 0)
+#         self.content_layout.setSpacing(0)
+#         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+    
+#     def update_main_city(self, city_name):
+#         self.main.update_city(city_name)
+
+
 from PyQt6.QtWidgets import QMainWindow, QFrame, QHBoxLayout, QVBoxLayout
 from PyQt6.QtCore import Qt 
 from .main import MainInfo
 from .side_panel import SidePanel
 from .title_bar import TitleBar
+from modules.utils.bg_colors import get_bg_colors
 
 class Window(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         
-        self.setFixedSize(1200, 850)
+        self.setGeometry(100, 100, 1200, 850)
         self.setWindowTitle("Project")
-        
         self.central_widget = QFrame()
         self.main_layout = QVBoxLayout() 
         self.central_widget.setLayout(self.main_layout)
         self.setCentralWidget(self.central_widget)
-        
         self.title_bar = TitleBar(self)
         self.content = QFrame()
-        
+        self.setFixedSize(1200, 850)
         self.main_layout.addWidget(self.title_bar)
         self.main_layout.addWidget(self.content)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
-        
         self.content_layout = QHBoxLayout()
         self.content.setLayout(self.content_layout)
-        
         self.side_panel = SidePanel(self)
-        
-        self.main = MainInfo(side_panel=self.side_panel) 
-        
         self.content_layout.addWidget(self.side_panel)
+        
+        # Початковий фон (поки що стандартний)
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color: qlineargradient(
+                    x1: 0, y1: 1, x2: 1, y2: 0,
+                    stop: 0 #8A2BE2, stop: 1 #191970
+                );
+            }
+        """)
+        
+        self.main = MainInfo(self.side_panel)
+        self.main.set_window(self)
         self.content_layout.addWidget(self.main)
-        
-        self.setStyleSheet("""background-color: qlineargradient(
-            x1: 0, y1: 1, x2: 1, y2: 0,
-            stop: 0 #8A2BE2, stop: 1 #191970
-        )""")
-        
         self.content_layout.setContentsMargins(0, 0, 0, 0)
-        self.content_layout.setSpacing(0)
+        self.content_layout.setSpacing(20)
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
     
     def update_main_city(self, city_name):
         self.main.update_city(city_name)
+    
+    def update_background(self, icon_code):
+        """Змінює фон вікна залежно від коду погоди"""
+        colors = get_bg_colors(icon_code)
+        self.setStyleSheet(f"""
+            QMainWindow {{
+                background-color: qlineargradient(
+                    x1: 0, y1: 1, x2: 1, y2: 0,
+                    stop: 0 {colors[0]}, stop: 1 {colors[1]}
+                );
+            }}
+        """)
